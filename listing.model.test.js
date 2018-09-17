@@ -60,7 +60,8 @@ describe('Listing Schema Unit Tests', function() {
     it('throws an error when code not provided', function(done){
       new Listing({
         name: listing.name
-      }).save(function(err){
+      }).save(function (err) {
+          console.log(err);
         should.exist(err);
         done();
       })
