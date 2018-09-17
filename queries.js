@@ -61,3 +61,8 @@ findLibraryWest();
 removeCable();
 updatePhelpsLab();
 retrieveAllListings();
+
+// node.js needs to wait for mongoose to finish operations before closing connection, give it 1sec
+setTimeout(function () {
+    mongoose.connection.close();
+}, 1000)

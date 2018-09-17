@@ -33,3 +33,8 @@ for (var i = 0; i < data.entries.length;i++)
   Once you've written + run the script, check out your MongoLab database to ensure that 
   it saved everything correctly. 
  */
+
+// node.js needs to wait for mongoose to finish operations before closing connection, give it 1sec
+setTimeout(function () {
+    mongoose.connection.close();
+}, 1000)
