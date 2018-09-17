@@ -1,5 +1,12 @@
 /* Fill out these functions using Mongoose queries*/
 
+var fs = require('fs'),
+    mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    Listing = require('./ListingSchema.js'),
+    config = require('./config.js'),
+    data = require('./listings');
+
 var findLibraryWest = function() {
     /* 
       Find the document that contains data corresponding to Library West,
@@ -21,10 +28,9 @@ var removeCable = function() {
         if (err) throw err;
 
         console.log(listing);
-    });
-    listing.remove(function(err) {
-        if (err) throw err;
-        console.log('CABL deleted');
+        Listing.remove({ code: 'CABL' }, function (err, listing) {
+            if (err) throw err;
+        });
     });
 };
 var updatePhelpsLab = function() {
@@ -32,7 +38,7 @@ var updatePhelpsLab = function() {
     Phelps Laboratory's address is incorrect. Find the listing, update it, and then 
     log the updated document to the console. 
    */
-    Listing.findOneAndUpdate({ name: 'Phelps Laboratory' }, { address: '1953 Museum Rd, Gainesville, FL 32603' }, function (err, listing) {
+    Listing.findOneAndUpdate({ name: 'Phelps Laboratory' }, { address: '1953 Museum Rd, Gainesville, FL 32603' }, {new: true}, function (err, listing) {
         if (err) throw err;
 
         console.log(listing);
@@ -49,6 +55,7 @@ var retrieveAllListings = function () {
     });
 };
 
+mongoose.connect(config.db.uri, { useMongoClient: true });
 
 findLibraryWest();
 removeCable();
